@@ -49,9 +49,14 @@ class Todo < ActiveRecord::Base
   end
 
   def self.mark_as_complete!(todo_id)
-    todo = find(todo_id)
-    todo.completed = true
-    todo.save
-    todo
+    begin
+    rescue
+      todo = find(todo_id)
+      todo.completed = true
+      todo.save
+      todo
+    else
+      "Invalid Id"
+    end
   end
 end
